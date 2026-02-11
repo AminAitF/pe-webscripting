@@ -13,6 +13,5 @@ while (!isGetal(aantallijnen) || aantallijnen < 0 || aantallijnen > 9) {
 for (let i = 1; i <= aantallijnen; i++) {
     let witRuimte = aantallijnen - i;
     console.log(" ".repeat(witRuimte)  + "#".repeat(i));
-    //
 }
 
