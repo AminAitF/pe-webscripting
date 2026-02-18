@@ -1,0 +1,15 @@
+oef1a:
+Het probleem: prompt geeft altijd een STRING terug!
+"9" < "10" → JavaScript vergelijkt letters, niet getallen!
+"9" wint want "9" > "1" (eerste letter) 😬
+Wllh da geeft rare resultaten
+
+FIX: Number() toevoegen!
+oef1b:
+
+Geen bugs, werkt perfect → output is 10 🎯
+
+Één kleine opmerking:
+<= kan je vervangen door <, maakt geen verschil voor het resultaat maar is logischer:
+javascriptif (number < minGetal) {
+Met <= overschrijf je minGetal ook als het gelijk is → zelfde waarde, extra werk voor niks

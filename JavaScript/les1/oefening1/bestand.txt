@@ -1,0 +1,12 @@
+1a:
+- oefening lezen en variabelen opschrijven
+- afdruk oplossing analyseren
+
+1b:
+- opgaven lezen
+- afdruk oplossing analyseren
+- gezien dat het hetzelfde is als 1a met enkele tweaks
+- aanpassingen gedaan
+
+1c:
+- idem 1b

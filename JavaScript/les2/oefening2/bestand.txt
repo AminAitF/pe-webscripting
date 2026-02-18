@@ -1,0 +1,22 @@
+1. 🐛 Base case bug
+fibonacci(0) moet 0 returnen, niet 1!
+javascriptif (n === 0) return 0;
+if (n === 1) return 1;
+2. ⚠️ Negatieve nummers
+Als gebruiker -3 intypt → infinite loop 💀 Doe een check:
+javascriptif (n < 0) return "Geef een positief getal!";
+
+Gefixte code:
+javascriptconst prompt = require('prompt-sync')();
+
+let getal = Number(prompt('Geef een nummer: '));
+
+function fibonacci(n) {
+    if (n < 0) return "Geef een positief getal!";
+    if (n === 0) return 0;
+    if (n === 1) return 1;
+
+    return fibonacci(n - 2) + fibonacci(n - 1);
+}
+
+console.log(fibonacci(getal));
