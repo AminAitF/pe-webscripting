@@ -1,0 +1,13 @@
+Probleem
+
+jaar-- verlaagt eerst de waarde na het retourneren.
+
+jaar-- betekent: "return eerst jaar, dan verlaag het".
+
+Dus return jaar-- geeft nog steeds het originele jaar, wat niet is wat je wilt.
+
+In dit geval wil je het verlaagde jaar retourneren. Hiervoor moet je --jaar gebruiken:
+
+--jaar
+
+--jaar verlaagt eerst het getal, en geeft dan de nieuwe waarde terug.

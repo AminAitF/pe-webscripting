@@ -1,0 +1,58 @@
+Het probleem is dat je twee verschillende modules in hetzelfde bestand hebt gezet. In Node.js werkt require('./util/InputError') alleen als InputError in een apart bestand staat.
+
+Nu staat je code zo in één file:
+
+module.exports = class Vec {...}
+
+'use strict';
+module.exports = class InputError extends Error {}
+
+Maar:
+
+1️⃣ De tweede module.exports overschrijft de eerste
+2️⃣ require('./util/InputError') probeert een ander bestand te laden dat niet bestaat
+
+Wat je hebt:
+
+Vec.js – klasse voor een 2D vector met x en y. Heeft plus(), minus(), length en toString(). Gooit een InputError als je geen nummers meegeeft.
+Polyline.js – klasse voor een reeks van Vec's. Je kan er Vec's aan toevoegen met add(), en hij gooit een error als het geen Vec is.
+InputError.js – custom error klasse, extends gewoon Error. Simpel maar proper.
+app.js – test alles ff uit. Maakt vectors, telt ze op, voegt ze toe aan een Polyline.
+
+Wat er gebeurt als je app.js runt:
+(2,3)          ← v.toString()
+3.605...       ← v.length (√13)
+[Vec, Vec, Vec] ← poly._vecs na 3x add()
+misse ingave x: [object Date] of y: 1  ← InputError van v4
+done
+De try/catch vangt de error van new Vec(new Date(), 1) netjes op want Date is geen number.
+Één dingetje khoya – in app.js maak je v5 aan maar gebruik je hem nergens. Wllh beetje dode code dat 😄
+Moet ik iets aanpassen of uitleggen?C:\nvm4w\nodejs\node.exe C:\Users\amin_\Desktop\semester2\pe-webscripting\JavaScript\les3\oefening5\app.js
+(2,3)
+3.605551275463989
+misse ingave x: Thu Mar 05 2026 11:48:33 GMT+0100 (Midden-Europese standaardtijd) of y: 1
+done
+Process finished with exit code 0
+ik zie mijn array niet11:53Yo khoya! Saff ik zie het probleem!
+In app.js doe je:
+jsconsole.log(poly._vecs);
+Maar die lijn staat na new Vec(new Date(), 1) — en die gooit een error! Dus de catch pakt hem op en stopt daar, en je console.log(poly._vecs) wordt nooit bereikt.
+Kijk:
+jstry {
+    let v = new Vec(2,3);
+    let v2 = new Vec(3,4);
+    let v5 = new Vec(3,4);
+    let v3 = v.plus(v2);
+    console.log(v.toString());       // ✅ wordt geprint
+    console.log(v.length);           // ✅ wordt geprint
+    let v4 = new Vec(new Date(), 1); // 💥 ERROR hier!
+
+    let poly = new Polyline([]);     // ❌ nooit bereikt
+    poly.add(v);
+    poly.add(v2);
+    poly.add(v3);
+    console.log(poly._vecs);        // ❌ nooit bereikt
+} catch(error) {
+    console.log(error.message);     // vangt de error op
+}
+Fix – zet v4 gewoon na de polyline code:

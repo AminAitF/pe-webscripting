@@ -1,0 +1,20 @@
+Yo khoya, ik zie het probleem direct! 🔥
+In je static make() doe je:
+jsreturn new Date(day, month, year);
+Maar Date is ook een ingebouwde JavaScript klasse! Dus hij roept de JS Date aan in plaats van jouw eigen klasse — en die verwacht andere parameters.
+Fix – gebruik new this(...) of de klassenaam expliciet:
+jsstatic make(day, month, year) {
+    return new this(day, month, year);
+}
+new this zegt: maak een instantie van déze klasse, niet de ingebouwde JS Date. Wllh simpele fix maar sneaky probleem 😄
+En nog één ding khoya – je print() print al met de maandnaam, maar je hebt geen aparte printMonth() methode. Volgens de oefening moet je twee methodes hebben:
+jsprint() {
+    // 1/2/2001
+    console.log(`${this._day}/${this._month}/${this._year}`);
+}
+
+printMonth() {
+    // 1/feb/2001
+    console.log(`${this._day}/${Date.MONTHS[this._month - 1]}/${this._year}`);
+}
+En verwijder this._datum uit de constructor, die heb je niet nodig!

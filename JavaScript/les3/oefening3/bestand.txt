@@ -1,0 +1,68 @@
+Waarom je _naam en _voornaam ziet
+
+Je gebruikt getters/setters:
+
+set naam(naam) {
+    this._naam = naam;
+}
+
+Dus intern wordt opgeslagen:
+
+_naam
+_voornaam
+
+Daarom toont console.log deze properties.
+
+2. Waarom de datum anders lijkt
+
+Je maakt de datum zo:
+
+new Date(2003, 4, 16)
+
+Maar maanden beginnen bij 0:
+
+0 januari
+1 februari
+2 maart
+3 april
+4 mei
+
+Dus je krijgt:
+
+16 mei 2003
+
+Niet april.
+
+3. Correcte constructor
+
+Als je maand normaal wil ingeven (1-12):
+
+this.geboortedatum = new Date(jaar, maand - 1, dag);
+4. Mooier resultaat tonen
+
+Als je iets duidelijker wil loggen:
+
+console.log(persoon.voornaam, persoon.naam);
+console.log(persoon.geboortedatum.toLocaleDateString('nl-BE'));
+console.log(persoon.berekenLeeftijd());
+
+Output bijvoorbeeld:
+
+Amin Ait Faraji
+16/04/2003
+22
+5. Nog mooier: toString()
+
+Voeg dit toe aan je class:
+
+toString(){
+    return `${this.voornaam} ${this.naam} (${this.berekenLeeftijd()} jaar)`;
+}
+
+Dan kan je doen:
+
+console.log(persoon.toString());
+
+Output:
+
+Amin Ait Faraji (22 jaar)

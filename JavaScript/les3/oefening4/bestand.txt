@@ -1,0 +1,27 @@
+Probleem in toString()
+
+Je hebt hier een extra quote en haakje in je string:
+
+toString(){
+    return `"(${this._x},${this._y})"  voor een Vec met waarde voor x = ${this._x} en waarde voor y = ${this._y})`;
+}
+
+Problemen:
+
+de " rond (x,y) zijn niet nodig
+
+er staat een extra ) op het einde
+
+Het probleem is dat je twee verschillende modules in hetzelfde bestand hebt gezet. In Node.js werkt require('./util/InputError') alleen als InputError in een apart bestand staat.
+
+Nu staat je code zo in één file:
+
+module.exports = class Vec {...}
+
+'use strict';
+module.exports = class InputError extends Error {}
+
+Maar:
+
+1️⃣ De tweede module.exports overschrijft de eerste
+2️⃣ require('./util/InputError') probeert een ander bestand te laden dat niet bestaat

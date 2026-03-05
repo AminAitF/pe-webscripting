@@ -1,0 +1,38 @@
+Probleem: geboortejaar getter/setter wordt nooit gebruikt
+
+Je hebt dit:
+
+get geboortejaar() {
+    return this._geboortejaar;
+}
+set geboortejaar(geboortejaar){
+    this._geboortejaar = geboortejaar;
+}
+
+Maar in je constructor doe je:
+
+this.geboortedatum = new Date(jaar, maand, dag);
+
+Dus _geboortejaar wordt nooit ingesteld of gebruikt.
+
+👉 Deze getter/setter zijn dus overbodig.
+
+2. Belangrijk: maand in Date
+
+In JavaScript beginnen maanden bij 0.
+
+0 = januari
+1 = februari
+2 = maart
+3 = april
+4 = mei
+
+Dus dit:
+
+new Persoon('Ait Faraji', 'Amin', 2003, 4, 16);
+
+betekent:
+
+16 mei 2003
+
+Niet april.
